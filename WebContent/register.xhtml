@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets">
+<head>
+</head>
+<body>
+	<ui:composition template="resources/template/layout.xhtml">
+	
+	<ui:define name="mainContent">
+	
+	<f:view>
+		 <div class="container">
+      <!-- Example row of columns -->
+      
+      <div class="row">
+      <div class="col-md-offset-3 col-md-6 alert alert-danger" role="alert" id="errorsZone">
+		</div>
+      </div>
+      <div class="row">
+      <div class="col-md-offset-3 col-md-6 alert alert-success" role="alert" id="successZone">
+		</div>
+      </div>
+      <div class="row">
+        <form class="col-md-offset-3 col-md-6" id="registerForm">
+			<legend>Inscription</legend>
+			<div class="form-group" id="usernameGroup">
+				<label for="username">Nom d'utilisateur:</label>
+				<input id="username" type="text" class="form-control" />
+			</div>		
+	
+			<div class="form-group" name="passwordGroup">
+				<label for="password">Mot de passe:</label>
+				<input id="password" type="password" class="form-control" />
+			</div>	
+			
+			<div class="form-group" name="passwordGroup">
+				<label for="password2">Confirmez le mot de passe:</label>
+				<input id="password2" type="password" class="form-control" />
+			</div>	
+			
+			<div class="form-group" id="emailGroup">
+				<label for="email">Email:</label>
+				<input id="email" type="text" class="form-control" />
+			</div>	
+				
+			<div class="form-group">
+				<input id="submitRegister" type="button" value="Inscription" class="form-control btn btn-primary" />
+			</div>
+			
+        </form>
+      </div>
+	  </div></f:view>
+	
+	</ui:define>
+	
+	
+	</ui:composition>
+	
+
+   
+	  
+</body>
+</html>
