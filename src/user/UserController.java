@@ -3,6 +3,9 @@ package user;
 import java.util.Objects;
 
 import javax.ejb.Stateful;
+import javax.ejb.Stateless;
+import javax.faces.bean.RequestScoped;
+import javax.inject.Named;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -13,16 +16,17 @@ import javax.persistence.TypedQuery;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
-@Stateful
+@Stateless
+@Named
 public class UserController {
 
 	@PersistenceContext(unitName = "freesql")
 	private EntityManager em;
-
-	private User user = null;
+	
 
 	public UserController() {
 	}
+	
 
 	public boolean register(String username, String password, String email) {
 		Objects.requireNonNull(username);
@@ -39,15 +43,15 @@ public class UserController {
 		return true;
 	}
 
-	public boolean connexion(String username, String password) {
+	public Long connexion(String username, String password) {
 		TypedQuery<User> q = em.createNamedQuery("findUser", User.class);
 		q.setParameter("username", username);
-		q.setParameter("password", password);
+		q.setParameter("password", DigestUtils.sha1Hex(password));
 		try {
-			user = q.getSingleResult();
-			return true;
+			User u = q.getSingleResult();
+			return u.getId();
 		} catch (NoResultException e) {
-			return false;
+			return -1L;
 		}
 	}
 
@@ -63,12 +67,6 @@ public class UserController {
 			return false;
 		}
 	}
+	
 
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public User getUser() {
-		return user;
-	}
 }

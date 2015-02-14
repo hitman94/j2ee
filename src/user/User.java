@@ -11,7 +11,10 @@ import javax.validation.constraints.Size;
 
 @Entity
 
-@NamedQuery(name="checkUsername",query="SELECT u FROM User u WHERE u.username=:username")
+@NamedQueries({
+@NamedQuery(name="checkUsername",query="SELECT u FROM User u WHERE u.username=:username"),
+@NamedQuery(name="findUser",query="SELECT u FROM User u WHERE u.username=:username AND u.password=:password")
+})
 public class User {
 	
 	public static final int minUsernameLength = 4;

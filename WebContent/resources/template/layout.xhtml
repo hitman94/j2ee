@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Inscription</title>
@@ -8,52 +12,86 @@
 <script src="resources/js/jquery-1.11.2.min.js"></script>
 <script src="resources/js/bootstrap.min.js"></script>
 <script src="resources/js/control.js"></script>
+<script src="resources/js/login.js"></script>
 </head>
 <body>
-<f:view>
+	<f:view>
 
-<nav class="navbar navbar-inverse">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Project name</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-			<ul class="nav navbar-nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#">About</a></li>
-              <li><a href="#">Contact</a></li>
-            </ul>
-          <form class="navbar-form navbar-right">
-            <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control" />
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control" />
-            </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
-          </form>
-        </div><!--/.navbar-collapse -->
-      </div>
-    </nav>
-	
+		<nav class="navbar navbar-inverse">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+						aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">ImgUpem</a>
+				</div>
+				<div id="navbar" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="index.jsp">Home</a></li>
+						<li><a href="#">About</a></li>
+						<li><a href="#">Contact</a></li>
+						</ul>
+						<c:choose>
+							<c:when test="${ sessionScope.name != null}">
+								<div class=" navbar-form navbar-right">
+									<div class="dropdown">
+										<button class="btn btn-success dropdown-toggle" type="button"
+											id="dropdownMenu1" data-toggle="dropdown"
+											aria-expanded="true">
+											<h:outputText value="Bonjour ${sessionScope.name}"></h:outputText>
+											<span class="glyphicon glyphicon-user"></span>
+											<span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu" role="menu"
+											aria-labelledby="dropdownMenu1">
+											<li role="presentation"><a role="menuitem" tabindex="-1"
+												href="#">Mes images</a></li>
+											<li role="presentation"><a role="menuitem" tabindex="-1"
+												href="#">Déconnection</a></li>
+										</ul>
+									</div>
 
-    <div id="mainContent">
-    	<ui:insert name="mainContent">
-    	</ui:insert>
-    </div>
-	  
-	  
-	  <div class="navbar-inverse navbar-fixed-bottom">
-		<div class="container">
-			Hello
+
+								</div>
+							</c:when>
+							<c:otherwise>
+								<form class="navbar-form navbar-right">
+									<div class="form-group">
+										<input type="text" placeholder="Username" id="usernameLogin"
+											class="form-control" data-toggle="tooltip"
+											data-placement="bottom"
+											title="Utilisateur/mot de passe incorrect" />
+									</div>
+									<div class="form-group">
+										<input type="password" placeholder="Password"
+											id="passwordLogin" class="form-control" />
+									</div>
+									<button type="button" id="submitLogin"
+										class="form-control btn btn-success">Sign in</button>
+								</form>
+							</c:otherwise>
+						</c:choose>
+					
+
+				</div>
+				<!--/.navbar-collapse -->
+			</div>
+		</nav>
+
+
+		<div id="mainContent">
+			<ui:insert name="mainContent">
+			</ui:insert>
 		</div>
-	  </div>
-</f:view>
+
+
+		<div class="navbar-inverse navbar-fixed-bottom">
+			<div class="container">Hello</div>
+		</div>
+	</f:view>
 </body>
 </html>
