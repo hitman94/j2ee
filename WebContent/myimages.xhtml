@@ -19,28 +19,28 @@
 								<div class="col-md-12">
 									<img src="resources/images/test.png" class="img-responsive" />
 									<div class="btn-group">
-									<button type="button" class="btn btn-default dropdown-toggle"
-										data-toggle="dropdown" aria-expanded="false">
-										Visibilité
-										<span class="caret"></span>
-									</button>
-									<ul class="dropdown-menu" role="menu">
-										<li><a href="#"><span class="glyphicon glyphicon-ok"></span>Public</a></li>
-										<li><a href="#">Privé</a></li>
-									</ul>
+										<button type="button" class="btn btn-default dropdown-toggle"
+											data-toggle="dropdown" aria-expanded="false">
+											Visibilité <span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu" role="menu">
+											<li><a href="#"><span class="glyphicon glyphicon-ok"></span>Public</a></li>
+											<li><a href="#">Privé</a></li>
+										</ul>
 									</div>
 									<div class="btn-group">
-									<button type="button" class="btn btn-default dropdown-toggle"
-										data-toggle="dropdown" aria-expanded="true" id="dropdownAction">
-										Actions
-										<span class="caret"></span>
-									</button>
-									<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownAction">
-										<li><a href="#">Supprimer</a></li>
-									</ul>
+										<button type="button" class="btn btn-default dropdown-toggle"
+											data-toggle="dropdown" aria-expanded="true"
+											id="dropdownAction">
+											Actions <span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu" role="menu"
+											aria-labelledby="dropdownAction">
+											<li><a href="#">Supprimer</a></li>
+										</ul>
 									</div>
 								</div>
-								
+
 							</div>
 
 							<div class="row" style="margin-top: 3%;">
@@ -50,25 +50,39 @@
 							</div>
 
 						</div>
-						<div class="col-md-offset-1 col-md-5" style="border-left:1px solid grey;">
-							<form class="form">
+						<div class="col-md-offset-1 col-md-5"
+							style="border-left: 1px solid grey;">
+							<form class="form" id="formImgUpload" target="frameUpload" action="ImageUploadServlet" method="POST" enctype="multipart/form-data">
 								<div class="form-group">
-									<input type="text" placeholder="Username" id="usernameLogin"
-										class="form-control" data-toggle="tooltip"
-										data-placement="bottom"
-										title="Utilisateur/mot de passe incorrect" />
+									<input type="text" placeholder="Nom de l'image" name="nameImage" id="nameImage"
+										class="form-control" />
 								</div>
 								<div class="form-group">
-									<input type="password" placeholder="Password"
-										id="passwordLogin" class="form-control" />
+									<textarea placeholder="Description de l'image" id="imageDesc"
+										class="form-control" />
 								</div>
-								<button type="button" id="submitLogin"
-									class="form-control btn btn-success">Sign in</button>
+								
+								
+
+								<div class="form-group">
+									 <input type="checkbox" id="isPublic"/>
+									 <label for="isPublic">Image publique?</label>
+								</div>
+
+								<div class="form-group">
+									<label for="imageLocation">Votre image</label>
+									<input type="file" name="imageLocation" id="imageLocation" />
+								 		<p class="help-block">Votre image au format JPEG.</p>
+								</div>
+								<button type="submit" id="submitImage"
+									class="form-control btn btn-success">Envoyer mon image</button>
 							</form>
 						</div>
 					</div>
 
 				</div>
+				<script src="resources/js/images.js"></script>
+				<iframe name="frameUpload" id="frameUpload" style="display: none;"></iframe>.
 			</f:view>
 
 		</ui:define>
