@@ -43,15 +43,15 @@ public class UserController {
 		return true;
 	}
 
-	public Long connexion(String username, String password) {
+	public User connexion(String username, String password) {
 		TypedQuery<User> q = em.createNamedQuery("findUser", User.class);
 		q.setParameter("username", username);
 		q.setParameter("password", DigestUtils.sha1Hex(password));
 		try {
 			User u = q.getSingleResult();
-			return u.getId();
+			return u;
 		} catch (NoResultException e) {
-			return -1L;
+			return null;
 		}
 	}
 

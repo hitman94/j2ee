@@ -34,12 +34,11 @@ public class ConnectionUserServlet extends HttpServlet {
 		response.setStatus(200);
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		Long id = uController.connexion(username, password);
-		if( id != -1){
+		User user = uController.connexion(username, password);
+		if( user!=null){
 			response.setStatus(200);
 			HttpSession session = request.getSession();
-			session.setAttribute("name", username);
-			session.setAttribute("id", id);
+			session.setAttribute("user", user);
 			return;
 		}
 		response.setStatus(400);

@@ -2,7 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	>
 <head>
 </head>
 <body>
@@ -15,17 +17,18 @@
 
 					<div class="row">
 						<div class="col-md-6">
-							<div class="row">
+							<div class="row" id="imgList">
+							<c:forEach items ="${imageController.retriveImage(sessionScope.user)}" var ="image">
 								<div class="col-md-12">
-									<img src="resources/images/test.png" class="img-responsive" />
+									<h:graphicImage styleClass="img-responsive" url="uploadedImg/${sessionScope.user.username}-${image.uploadedTime}.jpg"></h:graphicImage>
 									<div class="btn-group">
 										<button type="button" class="btn btn-default dropdown-toggle"
 											data-toggle="dropdown" aria-expanded="false">
 											Visibilité <span class="caret"></span>
 										</button>
 										<ul class="dropdown-menu" role="menu">
-											<li><a href="#"><span class="glyphicon glyphicon-ok"></span>Public</a></li>
-											<li><a href="#">Privé</a></li>
+											<li><a href="#" onclick="setPublic(${image.id},true)">Public</a></li>
+											<li><a href="#" onclick="setPublic(${image.id},false)">Privé</a></li>
 										</ul>
 									</div>
 									<div class="btn-group">
@@ -36,36 +39,41 @@
 										</button>
 										<ul class="dropdown-menu" role="menu"
 											aria-labelledby="dropdownAction">
-											<li><a href="#">Supprimer</a></li>
+											<li><a href="#" onclick="deleteImage(${image.id})">Supprimer</a></li>
 										</ul>
 									</div>
+									<dl>
+										<dt><h:outputText value="${image.name}"></h:outputText></dt>
+										<dd><h:outputText value="${image.description}"></h:outputText></dd>
+									</dl>
 								</div>
+							</c:forEach>
+								
 
 							</div>
 
-							<div class="row" style="margin-top: 3%;">
-								<div class="col-md-12">
-									<img src="resources/images/test.png" class="img-responsive" />
-								</div>
-							</div>
 
 						</div>
 						<div class="col-md-offset-1 col-md-5"
 							style="border-left: 1px solid grey;">
+							<div class="alert alert-danger"
+							role="alert" id="errorsZone"></div>
+							<div class="alert alert-success"
+							role="alert" id="successZone"></div>
 							<form class="form" id="formImgUpload" target="frameUpload" action="ImageUploadServlet" method="POST" enctype="multipart/form-data">
 								<div class="form-group">
 									<input type="text" placeholder="Nom de l'image" name="nameImage" id="nameImage"
 										class="form-control" />
 								</div>
 								<div class="form-group">
-									<textarea placeholder="Description de l'image" id="imageDesc"
+									<textarea placeholder="Description de l'image" name="imageDesc" id="imageDesc"
 										class="form-control" />
 								</div>
 								
 								
 
 								<div class="form-group">
-									 <input type="checkbox" id="isPublic"/>
+									 <input type="checkbox" name="isPublic" id="isPublic"/>
 									 <label for="isPublic">Image publique?</label>
 								</div>
 
