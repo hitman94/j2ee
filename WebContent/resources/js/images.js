@@ -4,7 +4,41 @@
  * and open the template in the editor.
  */
 function deleteImage(id) {
-	alert(id);
+	if(confirm("Voulez vous supprimer cette image?")) {
+		 $.ajax({
+	            type: 'POST',
+	            url: "ImageDeleteServlet",
+	            data: { imageId : id },
+	            success:function() {
+	            	window.location.replace("myimages.jsp");
+	            },
+	            error: function (data){	         
+	            	alert("Erreur lors de la suppresion de l'image.")
+	            }
+	       });
+		 
+	}
+		
+}
+
+function setPublic(id,boolPublic) {
+		 $.ajax({
+	            type: 'POST',
+	            url: "ChangeVisibilityServlet",
+	            data: { imageId : id, visibility:boolPublic },
+	            success:function() {
+	            	if(boolPublic) {
+		            	$("#public-"+id).html("<span class=\"glyphicon glyphicon-ok\"></span>Publique");
+		            	$("#private-"+id).html("Privé");
+	            	}else {
+	            		$("#public-"+id).html("Publique");
+		            	$("#private-"+id).html("<span class=\"glyphicon glyphicon-ok\"></span>Privé");
+	            	}
+	            },
+	            error: function (data){	         
+	            	//alert("Erreur lors de la suppresion de l'image.")
+	            }
+	       }); 		
 }
 
 $(document).ready(function() {
@@ -23,30 +57,7 @@ $(document).ready(function() {
 			$("#errorsZone").hide();
 			$("#successZone").show(500);
 			$("#successZone").html("<span class=\"glyphicon glyphicon-ok-circle\" aria-hidden=\"true\"></span>Image envoyée avec succès.<br/>");
-			$("#imgList").prepend("<div class=\"col-md-12\">"+
-									"<img class=\"img-responsive\" src=\"uploadedImg/"+username+"-"+upTime+".jpg\"/>"+
-									"<div class=\"btn-group\">"+
-									"<button type=\"button\" class=\"btn btn-default dropdown-toggle\""+
-									"data-toggle=\"dropdown\" aria-expanded=\"false\">"+
-									"Visibilité <span class=\"caret\"></span>"+
-								"</button>"+
-								"<ul class=\"dropdown-menu\" role=\"menu\">"+
-								"	<li><a href=\"#\" onclick=\"setPublic("+idImg+",true)\">Public</a></li>"+
-								"	<li><a href=\"#\" onclick=\"setPublic("+idImg+",false)\">Privé</a></li>"+
-								"</ul>"+
-							"</div>"+
-							"<div class=\"btn-group\">"+
-							"	<button type=\"button\" class=\"btn btn-default dropdown-toggle\""+
-							"		data-toggle=\"dropdown\" aria-expanded=\"true\""+
-							"		id=\"dropdownAction\">"+
-							"		Actions <span class=\"caret\"></span>"+
-							"	</button>"+
-							"	<ul class=\"dropdown-menu\" role=\"menu\""+
-							"		aria-labelledby=\"dropdownAction\">"+
-							"		<li><a href=\"#\" onclick=\"deleteImage("+idImg+")\">Supprimer</a></li>"+
-							"	</ul>"+
-							"</div>"+
-					"	</div>");
+			window.location.replace("myimages.jsp");
 			
 		}
 		else {

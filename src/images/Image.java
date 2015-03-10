@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 
@@ -12,7 +13,10 @@ import user.User;
 
 
 @Entity
-@NamedQuery(name="findLastImgByUser", query = "SELECT i FROM Image i WHERE i.owner=:user ORDER BY i.uploadedTime DESC ")
+@NamedQueries({
+		@NamedQuery(name="findLastImgByUser", query = "SELECT i FROM Image i WHERE i.owner=:user ORDER BY i.uploadedTime DESC "),
+		@NamedQuery(name="getPublicImageByDate", query = "SELECT i FROM Image i WHERE i.isPublic=true ORDER BY i.uploadedTime DESC")
+})
 public class Image {
 
 	@Id
@@ -106,6 +110,10 @@ public class Image {
 	
 	public void setPublic(boolean isPublic) {
 		this.isPublic = isPublic;
+	}
+	
+	public boolean isPublic() {
+		return isPublic;
 	}
 	
 	public User getOwner() {

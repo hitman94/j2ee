@@ -13,11 +13,21 @@
 		<ui:define name="mainContent">
 
 			<f:view>
+			<c:if test="${sessionScope.user ==null}">
+				<script>
+					window.location.replace("index.jsp");
+				</script>
+			</c:if>
 				<div class="container">
 
 					<div class="row">
+					<h2>Mes images</h2>
 						<div class="col-md-6">
+							
 							<div class="row" id="imgList">
+							<c:if test="${imageController.retriveImage(sessionScope.user).size() == 0}">
+								<h3>Vous n'avez pas encore envoyé d'images</h3>
+							</c:if>
 							<c:forEach items ="${imageController.retriveImage(sessionScope.user)}" var ="image">
 								<div class="col-md-12">
 									<h:graphicImage styleClass="img-responsive" url="uploadedImg/${sessionScope.user.username}-${image.uploadedTime}.jpg"></h:graphicImage>
@@ -27,8 +37,11 @@
 											Visibilité <span class="caret"></span>
 										</button>
 										<ul class="dropdown-menu" role="menu">
-											<li><a href="#" onclick="setPublic(${image.id},true)">Public</a></li>
-											<li><a href="#" onclick="setPublic(${image.id},false)">Privé</a></li>
+											<li><a href="#" onclick="setPublic(${image.id},true)" id="public-${image.id}">
+											
+											<c:if test="${image.isPublic()}"><span class="glyphicon glyphicon-ok"></span></c:if>
+											Publique</a></li>
+											<li><a href="#" onclick="setPublic(${image.id},false)" id="private-${image.id}"><c:if test="${!image.isPublic()}"><span class="glyphicon glyphicon-ok"></span></c:if>Privé</a></li>
 										</ul>
 									</div>
 									<div class="btn-group">

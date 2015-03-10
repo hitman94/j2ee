@@ -39,16 +39,12 @@ public class ImageUploadServlet extends HttpServlet {
 	 */
 	public ImageUploadServlet() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
+
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		String path=getServletContext().getRealPath("/uploadedImg/");
+		String path=getServletContext().getRealPath("/");
 		Part p = request.getPart("imageLocation");
 		String name = request.getParameter("nameImage");
 		String description = request.getParameter("imageDesc");
@@ -56,6 +52,14 @@ public class ImageUploadServlet extends HttpServlet {
 		User user = (User)request.getSession().getAttribute("user");
 		Long uploadedTime = System.currentTimeMillis();
 		if (p.getContentType().equals("image/jpeg") &&  user != null) {
+			File imgDir = new File(path+"/uploadedImg/");
+			if(!imgDir.exists()) {
+				if(imgDir.mkdir()) {
+					path = getServletContext().getRealPath("/uploadedImg/");
+				}
+			} else {
+				path = getServletContext().getRealPath("/uploadedImg/");
+			}
 			InputStream in = null;
 			File f = null;
 			FileOutputStream fout = null;
@@ -81,7 +85,7 @@ public class ImageUploadServlet extends HttpServlet {
 			
 			Long idCreated;
 			try {
-				extractor.parseJpeg(f);					
+				extractor.parseJpeg(f);		
 				idCreated=iController.createImage(name, description, new Double(data.get(TIFF.IMAGE_WIDTH)),
 							new Double(data.get(TIFF.IMAGE_LENGTH)), 
 							isPublic,

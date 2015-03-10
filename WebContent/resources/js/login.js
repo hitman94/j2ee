@@ -15,7 +15,7 @@ $(document).ready(function (){
         
         $.ajax({
         type: 'POST',
-        url: "ConnectionUserServlet",
+        url: contextPath+"/ConnectionUserServlet",
         data: { username : name, password:pass},
         success: function (data) {
         	window.location.replace("index.jsp");        	
@@ -26,6 +26,21 @@ $(document).ready(function (){
         
          });
 	} );
+	
+	$("#deconnection").click(function() {
+		$.ajax({
+	        type: 'POST',
+	        url: contextPath+"/DeconnectionServlet",
+	        success: function (data) {
+	        	window.location.replace("index.jsp");        	
+	        },
+	        error: function (data){
+	        	$("#usernameLogin").tooltip('show');
+	        }
+		});
+	        
+	   });
+	
 
     
     
