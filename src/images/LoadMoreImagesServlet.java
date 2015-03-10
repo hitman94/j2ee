@@ -33,8 +33,6 @@ public class LoadMoreImagesServlet extends HttpServlet {
 		String number = request.getParameter("number");
 		String size = request.getParameter("size");
 		String imgName = request.getParameter("name");
-		log(imgName);
-		log(size);
 		List<Image> iList=iController.getPublicImageFrom(new Integer(index), new Integer(number), size, imgName);
 		if(iList.size()==0) {
 			response.sendError(400);

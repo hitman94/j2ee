@@ -51,6 +51,11 @@ public class ImageUploadServlet extends HttpServlet {
 		boolean isPublic =  (request.getParameter("isPublic")==null)?false:true;
 		User user = (User)request.getSession().getAttribute("user");
 		Long uploadedTime = System.currentTimeMillis();
+		if(name.isEmpty()) {
+			response.setStatus(400);
+			response.getWriter().write("<html><head></head><body><div id= \"answer\">non</div><div id= \"error\">Le nom de l'image est vide</div></body></html>");
+			return;
+		}
 		if (p.getContentType().equals("image/jpeg") &&  user != null) {
 			File imgDir = new File(path+"/uploadedImg/");
 			if(!imgDir.exists()) {
@@ -92,7 +97,7 @@ public class ImageUploadServlet extends HttpServlet {
 							uploadedTime,user);
 			} catch (SAXException | TikaException e) {
 				response.setStatus(400);
-				response.getWriter().write("non");
+				response.getWriter().write("<html><head></head><body><div id= \"answer\">non</div><div id= \"error\">Votre image n'est pas au format JPG</div></body></html>");
 				return;
 			}
 			response.setStatus(200);
@@ -102,7 +107,7 @@ public class ImageUploadServlet extends HttpServlet {
 		}
 
 		response.setStatus(400);
-		response.getWriter().write("non");
+		response.getWriter().write("<html><head></head><body><div id= \"answer\">non</div><div id= \"error\">Erreur lors de l'envoi de l'image</div></body></html>");
 
 	}
 

@@ -61,9 +61,10 @@ $(document).ready(function() {
 			
 		}
 		else {
+			var errorText = $('#frameUpload').contents().find('#error').html();
 			$("#successZone").hide();
 			$("#errorsZone").show(500);
-			$("#errorsZone").html("<span class=\"glyphicon glyphicon-exclamation-sign\" aria-hidden=\"true\"></span>Erreur lors de l'envoi de l'image.<br/>");		}
+			$("#errorsZone").html("<span class=\"glyphicon glyphicon-exclamation-sign\" aria-hidden=\"true\"></span>"+errorText+"<br/>");		}
 		
 	});
 
